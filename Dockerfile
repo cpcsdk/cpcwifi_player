@@ -1,4 +1,8 @@
 FROM cpcsdk/crossdev
 MAINTAINER Krusty/Benediction
 
-# There is no dependencies for this application
+
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -qy unrar
+
+

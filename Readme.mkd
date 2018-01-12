@@ -1,0 +1,73 @@
+# CPC automator
+
+This script aims at automatically launch applications an [Amstrad CPC](http://www.cpcwiki.eu/index.php/Main_Page) through the use of a [M4 card](http://www.cpcwiki.eu/index.php/M4_Board).
+
+It has initially been written to launch executable musics, bet it could be used to laucnh any one file application.
+
+
+# Installation
+
+## In a Docker container
+
+In order to use the player, you need to install `docker` and start the `bootstrap.sh` script.
+
+
+
+## In Linux
+
+In order to use the player, you have to install the following requirements
+
+ - `iDSK`
+ - `unrar`
+ - `xfer`
+
+## In MacOsx
+
+I guess it is the same that with `Linux`.
+
+## In Windows
+
+No idea. Probably with `bash` or `docker`
+
+
+# Usage
+
+The help of the application provide all information
+
+```
+./player.sh help
+Music player for CPC over M4 by Krusty/Benediction.
+
+This small script has been mainly created to listened on a real CPC the musics of SuTekH Of Epyteor.
+It can of course be used for any other music spreaded in a similar way (but to DSK of SuTekH are way more interesting with animations).
+
+Usage:
+
+./player.sh play DSK/B2B6\ By\ Triace\ \(2017\)\(SuTekH\ Of\ Epyteor\).dsk  # Play the music contained in the specified DSK
+./player.sh play b2b6 # Play the music in the DSK file in the database that continas the specified string
+./player.sh list # List the collection
+./player.sh random # Play the collection in a random order
+./player.sh download # Download the DSK of SuTekH Of Epyteor
+
+
+Known limitations:
+
+ - Do not work with DSK containing several files
+ - Random play needs to manually change the music
+ - If the CPC player needs the user to press a key before playing the music you still have to do it
+
+Pre-requisits:
+
+ - iDSK
+ - xfer
+
+Optional :
+
+ - unrar to unpack the downloaded files
+
+Environement vaariables of interest:
+
+ - CPCIP: IP address of the M4 card
+ - DB: folder of the database of DSK
+
+```
