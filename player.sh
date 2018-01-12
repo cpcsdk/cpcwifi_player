@@ -26,7 +26,9 @@ function playdsk {
 	fi
 		
 	# Extract the unique file
-	local fname=$(iDSK "$dsk" -l 2>&1 | grep '0$' | sed -e 's/0$//' | head -n 1)
+	#local fname=$(iDSK "$dsk" -l 2>&1 | grep '0$' | sed -e 's/0$//' | head -n 1)
+	#Or a random one (better choice ?)
+	local fname=$(iDSK "$dsk" -l 2>&1 | grep '0$' | sed -e 's/0$//' | sort -R | head -n 1)
 	iDSK "$dsk" -g "$fname" > /dev/null 2> /dev/null || (iDSK "$dsk" -g "$fname" ; exit -1)
 	test -e "$fname" || (echo ERROR while extracting $fname from $dsk ; exit 1)
 	
