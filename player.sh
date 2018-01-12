@@ -6,6 +6,13 @@ DB=${DB:-DSK}
 shopt -s nocaseglob
 
 function playdsk {
+	if test -z "$1"
+	then
+		echo You need to provide a filter >&2
+		exit 1
+	fi
+
+
 	# Get the exact filename
 	local dsk="$1"
 	if ! test -e "$dsk"
@@ -13,7 +20,7 @@ function playdsk {
 		dsk=$(ls "$DB"/*"$dsk"* 2>/dev/null) 
 		if test -z "$dsk"
 		then
-			echo unable to find a DSK
+			echo unable to find a DSK >&2
 			exit 1
 		fi
 	fi
