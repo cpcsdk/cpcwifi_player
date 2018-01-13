@@ -5,7 +5,10 @@ DB=${DB:-DSK}
 
 shopt -s nocaseglob
 
-function playdsk {
+
+
+
+function play {
 	if test -z "$1"
 	then
 		echo You need to provide a filter >&2
@@ -14,17 +17,35 @@ function playdsk {
 
 
 	# Get the exact filename
-	local dsk="$1"
-	if ! test -e "$dsk"
+	local fname="$1"
+	if ! test -e "$fname"
 	then
-		dsk=$(ls "$DB"/*"$dsk"* 2>/dev/null) 
-		if test -z "$dsk"
+		fname=$(ls "$DB"/*"$fname"* 2>/dev/null) 
+		if test -z "$fname"
 		then
-			echo unable to find a DSK >&2
+			echo unable to find a source file >&2
 			exit 1
 		fi
 	fi
-		
+
+
+	case ${fname##*.} in
+		dsk)
+			playdsk "$fname"
+			;;
+		sna)
+			playsna "$fname"
+			;;
+	esac
+}
+
+
+function playsna {
+		xfer -y "$CPCIP" "$1"
+}
+
+function playdsk {
+	local dsk="$1"
 	# Extract the unique file
 	#local fname=$(iDSK "$dsk" -l 2>&1 | grep '0$' | sed -e 's/0$//' | head -n 1)
 	#Or a random one (better choice ?)
@@ -100,7 +121,7 @@ function check_db {
 function list {
 	check_db
 	cd "$DB"
-	ls *.dsk | sed -e 's/.dsk$//i' | column
+	ls *.{dsk,sna} 2>/dev/null | sed -e 's/.dsk$//i' | column
 }
 
 function random {
@@ -177,7 +198,7 @@ http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)
 
 case $1	in
 	play)
-		playdsk "$2"
+		play "$2"
 		;;
 	list)
 		list
