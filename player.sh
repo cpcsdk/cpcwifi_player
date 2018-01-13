@@ -121,15 +121,15 @@ function check_db {
 function list {
 	check_db
 	cd "$DB"
-	ls *.{dsk,sna} 2>/dev/null | sed -e 's/.dsk$//i' | column
+	ls *.{dsk,sna} -w 1 2>/dev/null | sed -e 's/.dsk$//i'
 }
 
 function random {
-	while read dsk
+	while read fname
 	do
-		echo $dsk
-		playdsk "$dsk"
-		read  -p "PRESS ENTER TO PLAY NEXT MUSIC" < /dev/tty
+		echo $fname
+		play "$fname"
+		read  -p "PRESS ENTER TO PLAY NEXT FILE" < /dev/tty
 	done < <(list | sort -R)
 }
 
@@ -201,7 +201,7 @@ case $1	in
 		play "$2"
 		;;
 	list)
-		list
+		list | column
 		;;
 	sync)
 		#TODO add something to automatically download all these great songs (a list of links ?)
