@@ -33,8 +33,19 @@ function playdsk {
 	local fname=""
 	if test $nbfiles -eq 1
 	then
+		# For one file, we extract this unique file and send it
 		fname=$fnames
+		echo "Use $fname in $dsk"
+		iDSK "$dsk" -g "$fname" > /dev/null 2> /dev/null || (iDSK "$dsk" -g "$fname" ; exit -1)
+		test -e "$fname" || (echo ERROR while extracting $fname from $dsk ; exit 1)
+		
+		# Play it
+		local fname2=$(echo $fname| sed -e 's/ //g')
+		mv "$fname" "$fname2"
+		xfer -y "$CPCIP" "$fname2"
+		rm "$fname2"
 	else
+		# For several files, we guess the filename to load, send the dsk and move in the dsk
 		# XXX Here we are in a borderline case
 		#     it would be better to send the DSK to the M4 and sk the M4 to do autolaunch.
 		#     Any other solution (included the one implemented) is bad
@@ -66,17 +77,16 @@ function playdsk {
 		done
 
 		fname=$selectedfname
+		cpcfname="playlist.dsk"
+		cp "$dsk" "/tmp/$cpcfname"
+		xfer -r "$CPCIP"
+		sleep 3 #XXX No idea of the right amount of time to wait
+		xfer -u "$CPCIP" "/tmp/$cpcfname" "/tmp/" 
+		xfer -x "$CPCIP" "/tmp/$cpcfname/$fname"
+		echo "Launch of $fname. If it is the wrong executable, reset (not shutdown) CPC and manually launch from it"
 
 	fi
-	echo "Use $fname in $dsk"
-	iDSK "$dsk" -g "$fname" > /dev/null 2> /dev/null || (iDSK "$dsk" -g "$fname" ; exit -1)
-	test -e "$fname" || (echo ERROR while extracting $fname from $dsk ; exit 1)
-	
-	# Play it
-	local fname2=$(echo $fname| sed -e 's/ //g')
-	mv "$fname" "$fname2"
-	xfer -y "$CPCIP" "$fname2"
-	rm "$fname2"
+
 }
 
 function check_db {
