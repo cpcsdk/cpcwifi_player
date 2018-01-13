@@ -28,7 +28,47 @@ function playdsk {
 	# Extract the unique file
 	#local fname=$(iDSK "$dsk" -l 2>&1 | grep '0$' | sed -e 's/0$//' | head -n 1)
 	#Or a random one (better choice ?)
-	local fname=$(iDSK "$dsk" -l 2>&1 | grep '0$' | sed -e 's/0$//' | sort -R | head -n 1)
+	local fnames=$(iDSK "$dsk" -l 2>&1 | grep '0$' | sed -e 's/0$//' -e 's/ //g')
+	local nbfiles=$(echo "$fnames" | wc -l) 
+	local fname=""
+	if test $nbfiles -eq 1
+	then
+		fname=$fnames
+	else
+		# XXX Here we are in a borderline case
+		#     it would be better to send the DSK to the M4 and sk the M4 to do autolaunch.
+		#     Any other solution (included the one implemented) is bad
+		local currentext=""
+		local selectedfname=""
+		for fname in $fnames
+		do
+			local ext=${fname##*.} 
+			if test "$ext" = "BAS"
+			then
+				selectedfname=$fname
+				selectedext=$ext
+			elif test "$ext" = ""
+			then
+				if test -z "$selectedext" -o "$selectedext" = "BIN"
+				then
+					selectedfname=$fname
+					selectedext=$ext
+				fi
+			elif test "$ext" = "BIN"
+			then
+				if test -z "$selectedext" 
+				then
+					selectedfname=$fname
+					selectedext=$ext
+
+				fi
+			fi
+		done
+
+		fname=$selectedfname
+
+	fi
+	echo "Use $fname in $dsk"
 	iDSK "$dsk" -g "$fname" > /dev/null 2> /dev/null || (iDSK "$dsk" -g "$fname" ; exit -1)
 	test -e "$fname" || (echo ERROR while extracting $fname from $dsk ; exit 1)
 	
