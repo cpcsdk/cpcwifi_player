@@ -49,7 +49,8 @@ function check_db {
 
 function list {
 	check_db
-	ls "$DB"/*.dsk | column
+	cd "$DB"
+	ls *.dsk | sed -e 's/.dsk$//i' | column
 }
 
 function random {
