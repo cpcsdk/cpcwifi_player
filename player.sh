@@ -179,5 +179,9 @@ Environement vaariables of interest:
 
 
 EOF
+;;
+	* )
+		playdsk "$*"
+		;;
 
 esac
