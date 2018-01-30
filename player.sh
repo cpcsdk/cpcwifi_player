@@ -141,13 +141,29 @@ function download  {
 	# Download each file
 	for url in $1
 	do
+		echo $url
 		wget -c  --content-disposition "$url"
 	done
 
 	# Unrar the RAR files
 	for file in *.rar
 	do
+		if test "$file" = '*.rar'
+		then
+			break
+		fi
 		unrar e -y "$file" || exit 1
+		rm "$file"
+	done
+
+	# Unzip the zip files
+	for file in *.zip
+	do
+		if test "$file" = '*.zip'
+		then
+			break
+		fi
+		unzip "$file" || exit 1
 		rm "$file"
 	done
 }
@@ -194,6 +210,15 @@ http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)
 http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=24423
 http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=24465
 http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=24480
+http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=24497
+"
+
+MUSIC_PACK_URLS="
+https://cpcrulez.fr/download.php?a=UoSlnJzWgsLl2M69gsbe29PNgLjn0cq5jsfo1ciHjsfo1cjKgrXgy5aIicbi
+https://cpcrulez.fr/download.php?a=UoSlnpbWgsLl2M69gsbe29PNgLjn0cq5jsfo1ciHjsfo1cjKgrXgy5aIicbi
+https://cpcrulez.fr/download.php?a=UoSlnpXWgsLl2M69gsbe29PNgLjn0cq5jsfo1ciHjsfo1cjKgrXgy5aIicbi
+https://cpcrulez.fr/download.php?a=UoSlnpzWgsLl2M69gsbe29PNgLjn0cq5jsfo1ciHjsfo1cjKgrXgy5aIicbi
+http://cpc.scifinet.org/?smd_process_download=1&download_id=231
 "
 
 case $1	in
@@ -210,7 +235,8 @@ case $1	in
 		random
 		;;
 	download)
-		download "$SUTEKH_URLS"
+		#download "$SUTEKH_URLS"
+		download $MUSIC_PACK_URLS
 		;;
 	help)
 cat<<EOF
