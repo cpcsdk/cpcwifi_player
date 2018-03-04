@@ -163,7 +163,7 @@ function download  {
 		then
 			break
 		fi
-		unzip "$file" || exit 1
+		unzip -o "$file" || exit 1
 		rm "$file"
 	done
 }
@@ -211,6 +211,8 @@ http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)
 http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=24465
 http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=24480
 http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=24497
+http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=24590
+http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=24865
 "
 
 MUSIC_PACK_URLS="
@@ -235,8 +237,8 @@ case $1	in
 		random
 		;;
 	download)
-		#download "$SUTEKH_URLS"
-		download $MUSIC_PACK_URLS
+		download "$SUTEKH_URLS"
+		download "$MUSIC_PACK_URLS"
 		;;
 	help)
 cat<<EOF
