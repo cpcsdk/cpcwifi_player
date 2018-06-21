@@ -213,6 +213,9 @@ http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)
 http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=24497
 http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=24590
 http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=24865
+http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=24902
+http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=25547
+http://www.cpcwiki.eu/forum/demos/wip-now-that's-what-i-call-chip-tunes-(winape)/?action=dlattach;attach=25644
 "
 
 MUSIC_PACK_URLS="
